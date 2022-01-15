@@ -47,6 +47,17 @@ export const StyleImageArea = styled.div`
   justify-content: space-between;
   margin: 20px auto 50px auto;
 `;
+
+export const StyleAreaCenter = styled.div<{ src?: string }>`
+  width: 100%;
+  height: 379px;
+  background-image: url(${(props) => (props.src ? props.src : '')});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  margin-bottom: 30px;
+`;
+
 export const StyleAreaLeft = styled.div<{ src?: string }>`
   width: 49%;
   height: 379px;

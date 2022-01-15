@@ -8,7 +8,6 @@ import Section from '@uikits/section/SectionWidget';
 import Category from '@pages/landing/Categories';
 import Product from '@pages/landing/Products';
 import Banner from '@uikits/banner/BannerWidget';
-import banner1 from '@assets/img/banner1.png';
 import banner2 from '@assets/img/lackydoo-1024x1024.png';
 import { StyleCustomBtn } from '@uikits/button/style';
 import { Container } from '../../style';
@@ -20,6 +19,7 @@ import {
   NEW_PRODUCTS,
   BASEDONORDER_PRODUCTS,
   CONSULT,
+  SETTING_API,
 } from '@config/constantApi';
 import { landingApisAction } from '@redux/landing/action';
 import useHttpRequest from '@hooks/useHttpRequest';
@@ -30,6 +30,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import ReactLoading from 'react-loading';
 import { colorPalette } from '@uikits/colors/Color';
 import { useHistory } from 'react-router-dom';
+import { BASE_URL } from '@config/urls';
 
 const Landing = () => {
   const { get } = useApi();
@@ -46,7 +47,7 @@ const Landing = () => {
   });
 
   const dispatch = useDispatch();
-
+  const [mainBannerUrl, setMainBannerUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [sendConsult, setSendConsult] = useState(false);
   const history = useHistory();
@@ -148,12 +149,17 @@ const Landing = () => {
       });
   };
 
+  const getMainPageBanner = () => {
+    getRequest(`${SETTING_API}/bannerspath?BannerType=0`).then((resp) => {
+      setMainBannerUrl(resp.data);
+    });
+  };
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-
+    getMainPageBanner();
     getShoppingListCount();
     getLandingApis();
     getMostVisiteProducts(12);
@@ -222,7 +228,7 @@ const Landing = () => {
             </div>
           )}
         </Section>
-        <Banner background={banner1} type='image' />
+        <Banner background={`${BASE_URL}${mainBannerUrl}`} type='image' />
         <Section
           more={true}
           link={`${PRODUCTS_URL}/?Sort=similarOrder`}

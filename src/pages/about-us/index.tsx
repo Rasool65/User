@@ -11,23 +11,21 @@ import {
   StyleAreaRightButton,
   StyleBrands,
   StyleBrandItem,
+  StyleAreaCenter,
 } from './style';
 import Banner from '@uikits/banner/BannerWidget';
 import Section from '@uikits/section/SectionWidget';
 import { StyleCustomBtn } from '@uikits/button/style';
 import { Container } from '../../style';
 import headerImage from '@assets/img/0-کاله.png';
-import Image1 from '@assets/img/aboutfooter.png';
-import Image2 from '@assets/img/Capture2.png';
-import Image3 from '@assets/img/Capture3.png';
 import useHttpRequest from '@hooks/useHttpRequest';
-import { COMPANY } from '@config/constantApi';
+import { COMPANY, SETTING_API } from '@config/constantApi';
 import { BASE_URL } from '@config/urls';
 
 const AboutUs = () => {
   const { getRequest } = useHttpRequest();
   const [result, setResult] = useState([]);
-
+  const [aboutUsBannerUrl, setAboutUsBannerUrl] = useState('');
   const getCompany = () => {
     getRequest(COMPANY)
       .then((resp) => {
@@ -38,14 +36,20 @@ const AboutUs = () => {
       });
   };
 
+  const getMainPageBanner = () => {
+    getRequest(`${SETTING_API}/bannerspath?BannerType=1`).then((resp) => {
+      setAboutUsBannerUrl(resp.data);
+    });
+  };
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
     getCompany();
+    getMainPageBanner();
   }, []);
-
   return (
     <SectionAboutUs>
       <AboutUsHeader>
@@ -79,13 +83,11 @@ const AboutUs = () => {
               </p>
             </ContentText>
           </Section>
-          <StyleImageArea>
-            <StyleAreaRight>
-              <StyleAreaRightTop src={Image2} />
-              <StyleAreaRightButton src={Image3} />
-            </StyleAreaRight>
-            <StyleAreaLeft src={Image1} />
-          </StyleImageArea>
+
+          <StyleAreaCenter src={`${BASE_URL}${aboutUsBannerUrl}`}>
+            {/* <Banner background={`${BASE_URL}${aboutUsBannerUrl}`} /> */}
+          </StyleAreaCenter>
+
           <Section more={false} name={'آشنایی با شرکت لبنیات کاله'}>
             <ContentText>
               <p>
@@ -110,12 +112,14 @@ const AboutUs = () => {
             <StyleBrands>
               {!!result &&
                 result?.length > 0 &&
-                result.map((item: any, index) => {
+                result.map((item: any, index: number) => {
                   return (
-                    <StyleBrandItem
-                      key={index}
-                      src={`${BASE_URL}${item?.logo}`}
-                    />
+                    <a href={item?.brandLink} target='_blank'>
+                      <StyleBrandItem
+                        key={index}
+                        src={`${BASE_URL}${item?.logo}`}
+                      />
+                    </a>
                   );
                 })}
             </StyleBrands>

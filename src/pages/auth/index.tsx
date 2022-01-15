@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-
 import { Container } from '../../style';
 import {
   StyleAvatar,
@@ -18,6 +17,9 @@ import Register from './Register';
 import MobileCode from './MobileCode';
 import ForgetPassword from './ForgetPassword';
 import { StyleLogo } from '@pages/commonStyle';
+import { SETTING_API } from '@config/constantApi';
+import useHttpRequest from '@hooks/useHttpRequest';
+import { BASE_URL } from '@config/urls';
 
 const AuthPage: IAuth.IAuthPage[] = [
   {
@@ -48,7 +50,8 @@ const AuthPage: IAuth.IAuthPage[] = [
 
 const Auth = () => {
   const history = useHistory();
-
+  const { getRequest } = useHttpRequest();
+  const [loginBannerUrl, setLoginBannerUrl] = useState('');
   const [CurrentPage, setCurrentPage] = useState<IAuth.IAuthPage>(AuthPage[0]);
   const [pageData, setPageData] = useState<any>({});
 
@@ -56,9 +59,16 @@ const Auth = () => {
     setPageData(data);
     setCurrentPage(AuthPage[page]);
   };
-
   const location = useLocation();
 
+  const getMainPageBanner = () => {
+    getRequest(`${SETTING_API}/bannerspath?BannerType=2`).then((resp) => {
+      setLoginBannerUrl(resp.data);
+    });
+  };
+  useEffect(() => {
+    getMainPageBanner();
+  }, []);
   return (
     <Container isHidden={location.pathname === AUTH_URL}>
       <StyleContainer>
@@ -77,8 +87,7 @@ const Auth = () => {
             pageData={pageData}
           />
         </StyleLogin>
-
-        <StyleAvatar src={AuthImage} />
+        <StyleAvatar src={`${BASE_URL}${loginBannerUrl}`} />
       </StyleContainer>
     </Container>
   );
