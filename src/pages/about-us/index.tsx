@@ -4,11 +4,6 @@ import {
   AboutUsHeader,
   AboutUsContent,
   ContentText,
-  StyleImageArea,
-  StyleAreaRight,
-  StyleAreaLeft,
-  StyleAreaRightTop,
-  StyleAreaRightButton,
   StyleBrands,
   StyleBrandItem,
   StyleAreaCenter,
@@ -26,6 +21,9 @@ const AboutUs = () => {
   const { getRequest } = useHttpRequest();
   const [result, setResult] = useState([]);
   const [aboutUsBannerUrl, setAboutUsBannerUrl] = useState('');
+
+  const urlTargets = ['none', '_blank', '_self'];
+
   const getCompany = () => {
     getRequest(COMPANY)
       .then((resp) => {
@@ -84,9 +82,7 @@ const AboutUs = () => {
             </ContentText>
           </Section>
 
-          <StyleAreaCenter src={`${BASE_URL}${aboutUsBannerUrl}`}>
-            {/* <Banner background={`${BASE_URL}${aboutUsBannerUrl}`} /> */}
-          </StyleAreaCenter>
+          <StyleAreaCenter src={`${BASE_URL}${aboutUsBannerUrl}`} />
 
           <Section more={false} name={'آشنایی با شرکت لبنیات کاله'}>
             <ContentText>
@@ -113,8 +109,19 @@ const AboutUs = () => {
               {!!result &&
                 result?.length > 0 &&
                 result.map((item: any, index: number) => {
+                  if (!item.brandLink) {
+                    return (
+                      <StyleBrandItem
+                        key={index}
+                        src={`${BASE_URL}${item?.logo}`}
+                      />
+                    );
+                  }
                   return (
-                    <a href={item?.brandLink} target='_blank'>
+                    <a
+                      href={item?.brandLink}
+                      target={urlTargets[item.urlTarget]}
+                    >
                       <StyleBrandItem
                         key={index}
                         src={`${BASE_URL}${item?.logo}`}
