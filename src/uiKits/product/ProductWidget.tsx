@@ -40,7 +40,7 @@ const Product = (props) => {
   );
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const [showPrice, setShowPrice] = useState<Boolean>(false);
+  const [showPrice, setShowPrice] = useState<boolean>(false);
 
   const { postRequest } = useHttpRequest();
 

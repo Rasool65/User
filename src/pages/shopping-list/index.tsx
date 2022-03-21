@@ -5,7 +5,6 @@ import {
   Content,
   Aside,
   TotalPrice,
-  PriceHeader,
   PriceDescription,
   CartList,
   ListItem,
@@ -46,6 +45,29 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import EmptyCart from '@assets/img/icon/shopping-basket@2x.png';
 import { useSelector } from 'react-redux';
+// import { Step, StepLabel, Stepper } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Stepper from '@uikits/stepper/StepperWidget';
+import Basket from './Basket';
+import Invoice from './Invoice';
+import { ISteps } from './ShoppingList';
+
+const steps: ISteps[] = [
+  {
+    id: 0,
+    name: 'سبد خرید',
+    Component: Basket,
+  },
+  {
+    id: 1,
+    name: 'مشاهده قیمت',
+    Component: Invoice,
+  },
+  // {
+  //   id: 2,
+  //   name: 'قیمت نهایی',
+  // },
+];
 
 const ShoppingListWidget = () => {
   const history = useHistory();
@@ -59,6 +81,13 @@ const ShoppingListWidget = () => {
   const [loadingPage, setLoadingPage] = useState(false);
   const [loadingEmpyBox, setLoadingEmpyBox] = useState(false);
   const [finalPrice, setfinalPrice] = useState<number>(0);
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const [CurrentStep, setCurrentStep] = useState(steps[activeStep]);
+  const [invoiceValues, setInvoiceValues] = useState({
+    sum: 0,
+    discount: 0,
+    total: 0,
+  });
   const dispatch = useDispatch();
 
   const { shoppingListCount } = useSelector(
@@ -100,6 +129,21 @@ const ShoppingListWidget = () => {
           return prev + current.count * current.price;
         }, 0);
         setfinalPrice(sumPrice);
+        const data = resp.data;
+        let sum = 0;
+        let discount = 0;
+
+        data.forEach((item) => {
+          console.log(item);
+          sum = item.count * item.price + sum;
+          discount = item.count * item.discount + discount;
+        });
+        console.log(sum);
+        setInvoiceValues({
+          sum,
+          discount,
+          total: sum - discount,
+        });
         setLoadingPage(false);
         if (resp.data.length === 0) {
           setLoadingEmpyBox(true);
@@ -150,6 +194,7 @@ const ShoppingListWidget = () => {
     postRequest(SUBMIT_ORDER, {})
       .then((resp) => {
         setLoadingOrder(false);
+        setActiveStep(0);
         dispatch(ShoppingListCountAction(0));
         dispatch(ShoppingListChangeAction(true));
         dispatch(preFactorApisAction(resp.data));
@@ -175,6 +220,10 @@ const ShoppingListWidget = () => {
     }
   }, [shoppingListChange]);
 
+  const onClickNext = () => {
+    setCurrentStep(steps[activeStep + 1]);
+    setActiveStep(activeStep + 1);
+  };
   return (
     <Container isHidden={false}>
       <Snackbar
@@ -187,6 +236,9 @@ const ShoppingListWidget = () => {
           سبد خرید با موفقیت آپدیت شد
         </Alert>
       </Snackbar>
+      <FontAwesomeIcon icon={['fas', 'coffee']} />
+
+      <Stepper steps={steps} activeStep={activeStep} />
 
       <SectionShoppingList>
         <Loader visibility={loadingPage || loading}>
@@ -197,8 +249,20 @@ const ShoppingListWidget = () => {
             width={60}
           />
         </Loader>
-        <Section more={false} name={'ليست خرید شما'}>
-          <ShoppingContainer>
+
+        <Section more={false}>
+          <CurrentStep.Component
+            currentData={currentData}
+            handleDeleteProduct={handleDeleteProduct}
+            handleClickNext={onClickNext}
+            handleSubmit={FinalizeInvoice}
+            invoiceValues={invoiceValues}
+            loadingEmpyBox={loadingEmpyBox}
+            loadingPage={loadingPage}
+            finalizeInvoice={FinalizeInvoice}
+            loadingOrder={loadingOrder}
+          />
+          {/* <ShoppingContainer>
             <Content>
               {currentData.length > 0 && (
                 <CartList>
@@ -253,10 +317,10 @@ const ShoppingListWidget = () => {
                           )}
 
                           <ItemContentPrice>
-                            {/* <span>ریال</span>
+                            <span>ریال</span>
                             <span>
                               {UtilsHelper.threeDigitSeparator(item.price)}
-                            </span> */}
+                            </span>
                           </ItemContentPrice>
                         </ItemContent>
                         <Option className='remove'>
@@ -334,11 +398,11 @@ const ShoppingListWidget = () => {
                       width={30}
                     />
                   )}
-                  نهایی کردن سفارش
+                  ادامه
                 </StyleCustomBtn>
               </TotalPrice>
             </Aside>
-          </ShoppingContainer>
+          </ShoppingContainer> */}
         </Section>
       </SectionShoppingList>
       <Addresses>

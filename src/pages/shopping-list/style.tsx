@@ -36,6 +36,11 @@ export const ShoppingContainer = styled.section`
 export const Aside = styled.aside`
   width: 30%;
   margin-bottom: 20px;
+  border-radius: 15px;
+  border: 1px solid ${colorPalette.gray_30};
+
+  margin-bottom: 20px;
+  padding: 12px 20px;
   ${MediaQueryStyle.sm(css`
     width: 100%;
   `)}
@@ -308,4 +313,33 @@ export const SelectOption = styled.div`
     border-radius: 50%;
     background-color: ${colorPalette.red_650};
   }
+`;
+export const ItemContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid ${colorPalette.gray_30};
+  border-radius: 15px;
+  margin-bottom: 15px;
+  align-items: center;
+  padding: 16px 28px;
+`;
+export const ItemOptionContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  > p {
+    margin: 0 0.4rem;
+  }
+`;
+export const ProductOption = styled.p`
+  min-width: 18rem;
+`;
+
+export const AsideItemContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 0;
+  justify-content: space-between;
 `;
