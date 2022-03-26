@@ -5,9 +5,10 @@ export const StyleStepperContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
-  background-color: #f5f5f5;
+  border: 1px solid #898989;
   border-radius: 1.5rem;
-  margin: 1rem 3rem;
+  margin: 3rem 3rem 1rem 3rem;
+  border-radius: 15px;
   padding: 1.25rem 1.75rem;
 `;
 export const StyleStepContainer = styled.div<{

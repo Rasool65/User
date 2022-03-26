@@ -23,16 +23,27 @@ import {
 } from './style';
 import EmptyCart from '@assets/img/icon/shopping-basket@2x.png';
 
+import CounterWidget from '@uikits/counter/CounterWidget';
+
 import closeIcon from '@assets/img/icon/close.png';
 
 const Basket = ({
   currentData,
   handleDeleteProduct,
   handleClickNext,
+  handleSubmit,
   loadingEmpyBox,
   loadingPage,
 }) => {
-  console.log(loadingEmpyBox, loadingPage);
+  const getValue = (count, id) => {
+    // setProductId(id);
+    const value = {
+      productId: id,
+      count,
+    };
+    handleSubmit(value);
+  };
+
   return (
     <ShoppingContainer>
       <Content>
@@ -73,20 +84,12 @@ const Basket = ({
                         />
                       </div>
                     </Option>
-                    {/* {loading && productId === item.productId ? (
-                      <ReactLoading
-                        type={'spinningBubbles'}
-                        color={colorPalette.red_650}
-                        height={15}
-                        width={15}
-                      />
-                    ) : (
-                      <Counter
-                        initial={item.count}
-                        data={item.productId}
-                        handleChange={getValue}
-                      />
-                    )} */}
+
+                    <CounterWidget
+                      initial={item.count}
+                      data={item.productId}
+                      handleChange={getValue}
+                    />
                   </ItemContent>
                   <Option className='remove'>
                     <StyleDivider

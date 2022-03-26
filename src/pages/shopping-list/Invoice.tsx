@@ -15,63 +15,96 @@ import {
   ItemOptionContainer,
   ProductOption,
   AsideItemContainer,
+  Loader,
+  LoaderContainer,
 } from './style';
 import ReactLoading from 'react-loading';
+import { useEffect, useState } from 'react';
+import useHttpRequest from '@hooks/useHttpRequest';
+import { PRODUCTS_WITH_PRICE } from '@config/constantApi';
 
-const Invoice = ({
-  currentData,
-  handleSubmit,
-  invoiceValues,
-  finalizeInvoice,
-  loadingOrder,
-}) => {
-  console.log(loadingOrder);
+const Invoice = ({ handleSubmit, finalizeInvoice, loadingOrder }) => {
+  const [invoiceData, setInvoiceData] = useState<any>([]);
+  const [invoiceValues, setInvoiceValues] = useState({
+    sum: 0,
+    discount: 0,
+    total: 0,
+  });
+  const { getRequest } = useHttpRequest();
+
+  const getInvoiceData = () => {
+    getRequest(PRODUCTS_WITH_PRICE).then((result) => {
+      let sum = 0;
+      let discount = 0;
+      const data = result.data;
+      data.forEach((item) => {
+        sum = item.count * item.price + sum;
+        discount = item.count * item.discount + discount;
+      });
+      setInvoiceValues({
+        sum,
+        discount,
+        total: sum - discount,
+      });
+      setInvoiceData(data);
+    });
+  };
+
+  useEffect(() => {
+    getInvoiceData();
+  }, []);
+
   return (
     <ShoppingContainer>
       <Content>
-        {currentData.length > 0 && (
+        {invoiceData.length > 0 ? (
           <CartList>
-            {currentData.map((item: any, index: number) => {
+            {invoiceData.map((item: any, index: number) => {
               return (
                 <ItemContainer key={index}>
                   <ItemOptionContainer>
                     <p>{index + 1}</p>
                     <ProductOption>{item.productName}</ProductOption>
                   </ItemOptionContainer>
-                  <ItemOptionContainer>
-                    <p>{item.count}</p>
-                    <p>{UtilsHelper.threeDigitSeparator(item.price)}</p>
-                  </ItemOptionContainer>
-                  <ItemOptionContainer>
-                    {!!item.discount && (
-                      <>
-                        <p>تخفیف</p>
-                        <p>{UtilsHelper.threeDigitSeparator(item.discount)}</p>
-                      </>
-                    )}
-                  </ItemOptionContainer>
-                  <ItemOptionContainer>
-                    <p>ریال</p>
-                  </ItemOptionContainer>
+                  {item.focIndicator ? (
+                    <ItemOptionContainer>
+                      <p>اشانتیون</p>
+                    </ItemOptionContainer>
+                  ) : (
+                    <>
+                      <ItemOptionContainer>
+                        <p>{item.count}</p>
+                        <p>{UtilsHelper.threeDigitSeparator(item.price)}</p>
+                      </ItemOptionContainer>
+                      <ItemOptionContainer>
+                        {!!item.discount && (
+                          <>
+                            <p>تخفیف</p>
+                            <p>
+                              {UtilsHelper.threeDigitSeparator(item.discount)}
+                            </p>
+                          </>
+                        )}
+                      </ItemOptionContainer>
+                      <ItemOptionContainer>
+                        <p>ریال</p>
+                      </ItemOptionContainer>
+                    </>
+                  )}
                 </ItemContainer>
               );
             })}
           </CartList>
+        ) : (
+          <LoaderContainer>
+            <ReactLoading
+              type={'spinningBubbles'}
+              color={colorPalette.red_650}
+              height={60}
+              width={60}
+            />
+          </LoaderContainer>
         )}
-        {/* {loadingEmpyBox && !loadingPage && (
-        <EmptyContent>
-          <IconWidget
-            alt='EmptyCart'
-            src={EmptyCart}
-            width={'57px'}
-            height={'57px'}
-          />
-          <h4>سبد خرید شما خالی است!</h4>
-          <p>
-            می‌توانید برای مشاهده محصولات بیشتر به صفحه محصولات مراجعه کنید.
-          </p>
-        </EmptyContent>
-      )} */}
       </Content>
       <Aside>
         <AsideItemContainer>
@@ -92,7 +125,7 @@ const Invoice = ({
         </AsideItemContainer>
         <StyleCustomBtn
           onClick={finalizeInvoice}
-          disabled={currentData.length === 0 ? true : false}
+          disabled={invoiceData.length === 0 ? true : false}
           type='button'
           Width={'100%'}
           Height={'51px'}

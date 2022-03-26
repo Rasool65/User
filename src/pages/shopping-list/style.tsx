@@ -328,9 +328,8 @@ export const ItemOptionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
   > p {
-    margin: 0 0.4rem;
+    margin-right: 1.5rem;
   }
 `;
 export const ProductOption = styled.p`
@@ -342,4 +341,11 @@ export const AsideItemContainer = styled.div`
   flex-direction: row;
   padding: 1rem 0;
   justify-content: space-between;
+`;
+export const LoaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 `;

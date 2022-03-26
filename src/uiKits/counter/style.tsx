@@ -13,6 +13,7 @@ export const StyleCartCounter = styled.div`
   margin-left: 3px;
   width: 73px;
   height: 32px;
+  max-width: 7rem;
   ${MediaQueryStyle.customMinWidth(
     CustomSize.lg,
     css`

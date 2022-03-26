@@ -19,6 +19,12 @@ import {
 } from './style';
 import Section from '@uikits/section/SectionWidget';
 import { StyleCustomBtn } from '@uikits/button/style';
+
+// icons
+import BasketIcon from '@assets/img/icon/basketIcon.svg';
+import InvoiceIcon from '@assets/img/icon/invoice.svg';
+import ConfirmIcon from '@assets/img/icon/confirm.svg';
+
 import Counter from '@uikits/counter/CounterWidget';
 import { StyleDivider } from '@uikits/divider/style';
 import { colorPalette } from '@uikits/colors/Color';
@@ -57,16 +63,20 @@ const steps: ISteps[] = [
     id: 0,
     name: 'سبد خرید',
     Component: Basket,
+    icon: BasketIcon,
   },
   {
     id: 1,
     name: 'مشاهده قیمت',
     Component: Invoice,
+    icon: InvoiceIcon,
   },
-  // {
-  //   id: 2,
-  //   name: 'قیمت نهایی',
-  // },
+  {
+    id: 2,
+    name: 'قیمت نهایی',
+    Component: Basket,
+    icon: ConfirmIcon,
+  },
 ];
 
 const ShoppingListWidget = () => {
@@ -75,6 +85,7 @@ const ShoppingListWidget = () => {
   const { getRequest, deleteRequest, postRequest, updateRequest } =
     useHttpRequest();
   const [currentData, setCurrentData] = useState<any>([]);
+  const [invoiceData, setInvoiceData] = useState<any>([]);
   const [productId, setProductId] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingOrder, setLoadingOrder] = useState(false);
@@ -134,11 +145,9 @@ const ShoppingListWidget = () => {
         let discount = 0;
 
         data.forEach((item) => {
-          console.log(item);
           sum = item.count * item.price + sum;
           discount = item.count * item.discount + discount;
         });
-        console.log(sum);
         setInvoiceValues({
           sum,
           discount,
@@ -236,7 +245,6 @@ const ShoppingListWidget = () => {
           سبد خرید با موفقیت آپدیت شد
         </Alert>
       </Snackbar>
-      <FontAwesomeIcon icon={['fas', 'coffee']} />
 
       <Stepper steps={steps} activeStep={activeStep} />
 
@@ -255,8 +263,7 @@ const ShoppingListWidget = () => {
             currentData={currentData}
             handleDeleteProduct={handleDeleteProduct}
             handleClickNext={onClickNext}
-            handleSubmit={FinalizeInvoice}
-            invoiceValues={invoiceValues}
+            handleSubmit={handleSubmit}
             loadingEmpyBox={loadingEmpyBox}
             loadingPage={loadingPage}
             finalizeInvoice={FinalizeInvoice}
@@ -405,39 +412,41 @@ const ShoppingListWidget = () => {
           </ShoppingContainer> */}
         </Section>
       </SectionShoppingList>
-      <Addresses>
-        <Section more={false} name={' آدرس گیرنده'}>
-          {!!userInfo?.address && (
-            <AddressItem>
-              <SelectOption>
-                <input type='radio' name='address' checked={true} />
-                <span className='checkmark' />
-              </SelectOption>
-              <p>
-                <span>گیرنده:</span>
-                <span>{userInfo?.fullName}</span>
-              </p>
-              <StyleDivider
-                Width={'1px'}
-                Height={'10px'}
-                Type={'Vertical'}
-                Background={colorPalette.gray_65}
-              />
-              <p>{userInfo?.address}</p>
-              <StyleDivider
-                Width={'1px'}
-                Height={'10px'}
-                Type={'Vertical'}
-                Background={colorPalette.gray_65}
-              />
-              <p>
-                <span>شماره تماس:</span>
-                <span>{userInfo?.mobile}</span>
-              </p>
-            </AddressItem>
-          )}
-        </Section>
-      </Addresses>
+      {activeStep === 0 && (
+        <Addresses>
+          <Section more={false} name={' آدرس گیرنده'}>
+            {!!userInfo?.address && (
+              <AddressItem>
+                <SelectOption>
+                  <input type='radio' name='address' checked={true} />
+                  <span className='checkmark' />
+                </SelectOption>
+                <p>
+                  <span>گیرنده:</span>
+                  <span>{userInfo?.fullName}</span>
+                </p>
+                <StyleDivider
+                  Width={'1px'}
+                  Height={'10px'}
+                  Type={'Vertical'}
+                  Background={colorPalette.gray_65}
+                />
+                <p>{userInfo?.address}</p>
+                <StyleDivider
+                  Width={'1px'}
+                  Height={'10px'}
+                  Type={'Vertical'}
+                  Background={colorPalette.gray_65}
+                />
+                <p>
+                  <span>شماره تماس:</span>
+                  <span>{userInfo?.mobile}</span>
+                </p>
+              </AddressItem>
+            )}
+          </Section>
+        </Addresses>
+      )}
     </Container>
   );
 };

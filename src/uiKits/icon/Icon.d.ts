@@ -4,5 +4,6 @@ export namespace Icon {
     width?: string;
     alt?: string;
     src?: string;
+    style?: React.CSSProperties;
   }
 }
