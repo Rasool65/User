@@ -23,6 +23,7 @@ import {
   DialogContent,
   DialogContentRight,
   DialogContentLeft,
+  StyleShowPriceProduct,
 } from './style';
 import MoreImage from './MoreImage';
 import IconWidget from '@uikits/icon/IconWidget';
@@ -47,7 +48,13 @@ import checkedIcon from '@assets/img/icon/checked.svg';
 import Dialog from '@material-ui/core/Dialog';
 import { BASE_URL } from '@config/urls';
 import useHttpRequest from '@hooks/useHttpRequest';
-import { PRODUCTS, CART, SETTING_API, CATEGORIES } from '@config/constantApi';
+import {
+  PRODUCTS,
+  CART,
+  SETTING_API,
+  CATEGORIES,
+  GET_PRICE,
+} from '@config/constantApi';
 import { PRODUCTS_URL, SHOPPING_LIST_URL } from '@config/constantUrl';
 import ReactLoading from 'react-loading';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -56,6 +63,8 @@ import { useSelector } from 'react-redux';
 import { ShoppingListChangeAction } from '@redux/shoppingList/action';
 import { useDispatch } from 'react-redux';
 import { colorPalette } from '@uikits/colors/Color';
+import { StyleShowPrice } from '@uikits/product/style';
+import { Button } from '@material-ui/core';
 
 const ProductInfo = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -65,7 +74,8 @@ const ProductInfo = () => {
   const { id } = useParams<any>();
   const history = useHistory();
   const [productCount, setProductCount] = useState<number>(1);
-
+  const [showPrice, setShowPrice] = useState<boolean>(false);
+  const [price, setPrice] = useState<number>(0);
   const [loadingProduct, setLoadingProduct] = useState(false);
   const [copied, setCopied] = useState(false);
   const [parents, setParents] = useState<any>([]);
@@ -218,6 +228,16 @@ const ProductInfo = () => {
     setCopied(true);
   };
 
+  const showPriceItem = () => {
+    if (id) {
+      setShowPrice(true);
+      getRequest(`${GET_PRICE}?productId=${id}`).then((resp) => {
+        setShowPrice(true);
+        setPrice(resp.data);
+      });
+    }
+  };
+
   return (
     <Container isHidden={false}>
       <Snackbar
@@ -309,13 +329,22 @@ const ProductInfo = () => {
                 Type={'Horizontal'}
               />
             </Section>
-            <Price>
-              <span>قیمت :</span>
-              <span className='price'>
-                {UtilsHelper.threeDigitSeparator(productValue.price)}
-              </span>
-              <span>ریال</span>
-            </Price>
+            {showPrice ? (
+              <Price>
+                <span>قیمت :</span>
+                <span className='price'>
+                  {UtilsHelper.threeDigitSeparator(price)}
+                </span>
+                <span>ریال</span>
+              </Price>
+            ) : (
+              <StyleShowPriceProduct>
+                <Button style={{ width: '100%' }} onClick={showPriceItem}>
+                  مشاهده قیمت
+                </Button>
+              </StyleShowPriceProduct>
+            )}
+
             <Cart>
               <Counter initial={1} handleChange={getCount} />
               <StyleCustomBtn

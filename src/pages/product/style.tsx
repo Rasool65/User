@@ -307,3 +307,10 @@ export const DialogContentLeft = styled.ul`
     width: 100%;
   `)}
 `;
+
+export const StyleShowPriceProduct = styled.button`
+  flex: auto;
+  border-radius: 6px;
+  margin-bottom: 25px;
+  width: 25%;
+`;

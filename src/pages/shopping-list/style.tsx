@@ -38,7 +38,6 @@ export const Aside = styled.aside`
   margin-bottom: 20px;
   border-radius: 15px;
   border: 1px solid ${colorPalette.gray_30};
-
   margin-bottom: 20px;
   padding: 12px 20px;
   ${MediaQueryStyle.sm(css`
@@ -328,7 +327,6 @@ export const ItemOptionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
   > p {
     margin: 0 0.4rem;
   }

@@ -1,5 +1,6 @@
 import { CART } from '@config/constantApi';
 import useHttpRequest from '@hooks/useHttpRequest';
+import Counter from '@uikits/counter/CounterWidget';
 import {
   ShoppingListChangeAction,
   ShoppingListCountAction,
@@ -24,6 +25,7 @@ import {
 import EmptyCart from '@assets/img/icon/shopping-basket@2x.png';
 
 import closeIcon from '@assets/img/icon/close.png';
+import ReactLoading from 'react-loading';
 
 const Basket = ({
   currentData,
@@ -32,7 +34,30 @@ const Basket = ({
   loadingEmpyBox,
   loadingPage,
 }) => {
+  const [loading, setLoading] = useState(false);
+  const { getRequest, deleteRequest, postRequest, updateRequest } =
+    useHttpRequest();
+  const [productId, setProductId] = useState<any>();
+
   console.log(loadingEmpyBox, loadingPage);
+  const getValue = (count, id) => {
+    setProductId(id);
+    const value = {
+      productId: id,
+      count,
+    };
+    setLoading(true);
+    updateRequest(CART, value)
+      .then((resp) => {
+        setLoading(false);
+        // setLoadingPage(false);
+        // setOpen(true);
+        // getCart();
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
   return (
     <ShoppingContainer>
       <Content>
@@ -73,7 +98,8 @@ const Basket = ({
                         />
                       </div>
                     </Option>
-                    {/* {loading && productId === item.productId ? (
+
+                    {loading && productId === item.productId ? (
                       <ReactLoading
                         type={'spinningBubbles'}
                         color={colorPalette.red_650}
@@ -86,7 +112,7 @@ const Basket = ({
                         data={item.productId}
                         handleChange={getValue}
                       />
-                    )} */}
+                    )}
                   </ItemContent>
                   <Option className='remove'>
                     <StyleDivider

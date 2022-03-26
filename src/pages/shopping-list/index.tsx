@@ -47,6 +47,7 @@ import EmptyCart from '@assets/img/icon/shopping-basket@2x.png';
 import { useSelector } from 'react-redux';
 // import { Step, StepLabel, Stepper } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Stepper from '@uikits/stepper/StepperWidget';
 import Basket from './Basket';
 import Invoice from './Invoice';
@@ -65,7 +66,8 @@ const steps: ISteps[] = [
   },
   // {
   //   id: 2,
-  //   name: 'قیمت نهایی',
+  //   name: 'تایید نهایی',
+  //   Component:confirm
   // },
 ];
 
@@ -154,28 +156,28 @@ const ShoppingListWidget = () => {
       });
   };
 
-  const getValue = (count, id) => {
-    setProductId(id);
-    const value = {
-      productId: id,
-      count,
-    };
-    handleSubmit(value);
-  };
+  // const getValue = (count, id) => {
+  //   setProductId(id);
+  //   const value = {
+  //     productId: id,
+  //     count,
+  //   };
+  //   handleSubmit(value);
+  // };
 
-  const handleSubmit = (value) => {
-    setLoading(true);
-    updateRequest(CART, value)
-      .then((resp) => {
-        setLoading(false);
-        setLoadingPage(false);
-        setOpen(true);
-        getCart();
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  };
+  // const handleSubmit = (value) => {
+  //   setLoading(true);
+  //   updateRequest(CART, value)
+  //     .then((resp) => {
+  //       setLoading(false);
+  //       setLoadingPage(false);
+  //       setOpen(true);
+  //       getCart();
+  //     })
+  //     .catch(() => {
+  //       setLoading(false);
+  //     });
+  // };
 
   const handleDeleteProduct = (id) => {
     setLoadingPage(true);
