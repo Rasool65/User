@@ -29,6 +29,7 @@ export const PRODUCTS = '/product';
 export const MOST_VISIT_PRODUCTS = '/product/mostvisitedproduct';
 export const NEW_PRODUCTS = '/product/newproductlist';
 export const BASEDONORDER_PRODUCTS = '/product/getproductbasedonorder';
+export const GET_PRICE = '/product/getprice';
 
 // consult
 export const CONSULT = '/customerconsult';

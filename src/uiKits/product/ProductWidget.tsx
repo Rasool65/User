@@ -20,7 +20,7 @@ import {
 import { useLocation, useHistory } from 'react-router-dom';
 import { BASE_URL } from '@config/urls';
 import { UtilsHelper } from '../../utils/UtilsHelper';
-import { CART } from '@config/constantApi';
+import { CART, GET_PRICE } from '@config/constantApi';
 import useHttpRequest from '@hooks/useHttpRequest';
 import ReactLoading from 'react-loading';
 import { useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 
 const Product = (props) => {
-  const { id, img, title, price, openSnackbar, CountProduct } = props;
+  const { id, img, title, openSnackbar, CountProduct } = props;
 
   const [productCount, setProductCount] = useState<number>(1);
   const { shoppingListCount } = useSelector(
@@ -41,8 +41,8 @@ const Product = (props) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [showPrice, setShowPrice] = useState<boolean>(false);
-
-  const { postRequest } = useHttpRequest();
+  const [price, setPrice] = useState<number>(0);
+  const { postRequest, getRequest } = useHttpRequest();
 
   const getCount = (count) => {
     setProductCount(count);
@@ -66,7 +66,15 @@ const Product = (props) => {
         });
     }
   };
-
+  const showPriceItem = () => {
+    if (id) {
+      setShowPrice(true);
+      getRequest(`${GET_PRICE}?productId=${id}`).then((resp) => {
+        setShowPrice(true);
+        setPrice(resp.data);
+      });
+    }
+  };
   return (
     <StyleProduct>
       <NavLink to={`${PRODUCT_URL}/${id}`}>
@@ -90,7 +98,9 @@ const Product = (props) => {
           </>
         ) : (
           <StyleShowPrice>
-            <Button onClick={() => setShowPrice(true)}>مشاهده قیمت</Button>
+            <Button style={{ width: '100%' }} onClick={showPriceItem}>
+              مشاهده قیمت
+            </Button>
           </StyleShowPrice>
         )}
       </StylePriceRow>
