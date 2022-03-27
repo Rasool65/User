@@ -58,6 +58,7 @@ import Stepper from '@uikits/stepper/StepperWidget';
 import Basket from './Basket';
 import Invoice from './Invoice';
 import { ISteps } from './ShoppingList';
+import Confirm from './Confirm';
 
 const steps: ISteps[] = [
   {
@@ -74,8 +75,8 @@ const steps: ISteps[] = [
   },
   {
     id: 2,
-    name: 'قیمت نهایی',
-    Component: Basket,
+    name: 'تایید نهایی',
+    Component: Confirm,
     icon: ConfirmIcon,
   },
 ];
@@ -164,28 +165,28 @@ const ShoppingListWidget = () => {
       });
   };
 
-  // const getValue = (count, id) => {
-  //   setProductId(id);
-  //   const value = {
-  //     productId: id,
-  //     count,
-  //   };
-  //   handleSubmit(value);
-  // };
+  const getValue = (count, id) => {
+    setProductId(id);
+    const value = {
+      productId: id,
+      count,
+    };
+    handleSubmit(value);
+  };
 
-  // const handleSubmit = (value) => {
-  //   setLoading(true);
-  //   updateRequest(CART, value)
-  //     .then((resp) => {
-  //       setLoading(false);
-  //       setLoadingPage(false);
-  //       setOpen(true);
-  //       getCart();
-  //     })
-  //     .catch(() => {
-  //       setLoading(false);
-  //     });
-  // };
+  const handleSubmit = (value) => {
+    setLoading(true);
+    updateRequest(CART, value)
+      .then((resp) => {
+        setLoading(false);
+        setLoadingPage(false);
+        setOpen(true);
+        getCart();
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
 
   const handleDeleteProduct = (id) => {
     setLoadingPage(true);
@@ -204,11 +205,12 @@ const ShoppingListWidget = () => {
     postRequest(SUBMIT_ORDER, {})
       .then((resp) => {
         setLoadingOrder(false);
-        setActiveStep(0);
+        // setActiveStep(0);
+        onClickNext();
         dispatch(ShoppingListCountAction(0));
         dispatch(ShoppingListChangeAction(true));
         dispatch(preFactorApisAction(resp.data));
-        history.push(PRE_FACTOR_URL);
+        // history.push(PRE_FACTOR_URL);
       })
       .catch(() => {
         setLoadingOrder(false);
@@ -264,153 +266,12 @@ const ShoppingListWidget = () => {
             currentData={currentData}
             handleDeleteProduct={handleDeleteProduct}
             handleClickNext={onClickNext}
-            // handleSubmit={handleSubmit}
+            handleSubmit={handleSubmit}
             loadingEmpyBox={loadingEmpyBox}
             loadingPage={loadingPage}
             finalizeInvoice={FinalizeInvoice}
             loadingOrder={loadingOrder}
           />
-          {/* <ShoppingContainer>
-            <Content>
-              {currentData.length > 0 && (
-                <CartList>
-                  {currentData.map((item, index) => {
-                    return (
-                      <ListItem key={index + 1}>
-                        <Option className='name'>
-                          <span>{index + 1}</span>
-                          <StyleDivider
-                            Width={'1px'}
-                            Height={'5px'}
-                            Type={'Vertical'}
-                            Background={colorPalette.gray_55}
-                          />
-                          <p>{item.productName}</p>
-                        </Option>
-                        <ItemContent>
-                          <p>{item.productName}</p>
-                          <Option className='remov-xs'>
-                            <StyleDivider
-                              Width={'1px'}
-                              Height={'5px'}
-                              Type={'Vertical'}
-                              Background={colorPalette.gray_55}
-                            />
-                            <div
-                              onClick={() => {
-                                handleDeleteProduct(item.id);
-                              }}
-                            >
-                              <IconWidget
-                                alt='close'
-                                src={closeIcon}
-                                width={'10px'}
-                                height={'10px'}
-                              />
-                            </div>
-                          </Option>
-                          {loading && productId === item.productId ? (
-                            <ReactLoading
-                              type={'spinningBubbles'}
-                              color={colorPalette.red_650}
-                              height={15}
-                              width={15}
-                            />
-                          ) : (
-                            <Counter
-                              initial={item.count}
-                              data={item.productId}
-                              handleChange={getValue}
-                            />
-                          )}
-
-                          <ItemContentPrice>
-                            <span>ریال</span>
-                            <span>
-                              {UtilsHelper.threeDigitSeparator(item.price)}
-                            </span>
-                          </ItemContentPrice>
-                        </ItemContent>
-                        <Option className='remove'>
-                          <StyleDivider
-                            Width={'1px'}
-                            Height={'5px'}
-                            Type={'Vertical'}
-                            Background={colorPalette.gray_55}
-                          />
-                          <div
-                            onClick={() => {
-                              handleDeleteProduct(item.id);
-                            }}
-                          >
-                            <IconWidget
-                              alt='close'
-                              src={closeIcon}
-                              width={'10px'}
-                              height={'10px'}
-                            />
-                          </div>
-                        </Option>
-                      </ListItem>
-                    );
-                  })}
-                </CartList>
-              )}
-              {loadingEmpyBox && !loadingPage && (
-                <EmptyContent>
-                  <IconWidget
-                    alt='EmptyCart'
-                    src={EmptyCart}
-                    width={'57px'}
-                    height={'57px'}
-                  />
-                  <h4>سبد خرید شما خالی است!</h4>
-                  <p>
-                    می‌توانید برای مشاهده محصولات بیشتر به صفحه محصولات مراجعه
-                    کنید.
-                  </p>
-                </EmptyContent>
-              )}
-            </Content>
-            <Aside>
-              <TotalPrice disabled={currentData.length === 0 ? true : false}>
-                <PriceHeader>
-                  <p>قیمت کالاها:</p>
-                  <div>
-                    <span>{UtilsHelper.threeDigitSeparator(finalPrice)}</span>
-                    <span>ریال</span>
-                  </div>
-                </PriceHeader>
-                <StyleDivider
-                  Width={'100%'}
-                  Height={'1px'}
-                  Type={'Horizontal'}
-                  Background={colorPalette.gray_47}
-                />
-                <PriceDescription>
-                  لطفا برای پیگیری سفارش وارد پروفایل شده واز طریق منوی "سفارش
-                  های من" و دکمه جزئیات سفارش از پیشرفت سفارش مطلع گردید.
-                </PriceDescription>
-                <StyleCustomBtn
-                  onClick={FinalizeInvoice}
-                  disabled={currentData.length === 0 ? true : false}
-                  type='button'
-                  Width={'100%'}
-                  Height={'51px'}
-                >
-                  {loadingOrder && (
-                    <ReactLoading
-                      type={'spinningBubbles'}
-                      color={'#ffffff'}
-                      height={30}
-                      width={30}
-                    />
-                  )}
-                  ادامه
-                </StyleCustomBtn>
-              </TotalPrice>
-            </Aside>
-          </ShoppingContainer> */}
         </Section>
       </SectionShoppingList>
       {activeStep === 0 && (

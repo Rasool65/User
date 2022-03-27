@@ -1,16 +1,7 @@
-import { CART } from '@config/constantApi';
-import useHttpRequest from '@hooks/useHttpRequest';
-import Counter from '@uikits/counter/CounterWidget';
-import {
-  ShoppingListChangeAction,
-  ShoppingListCountAction,
-} from '@redux/shoppingList/action';
 import { StyleCustomBtn } from '@uikits/button/style';
 import { colorPalette } from '@uikits/colors/Color';
 import { StyleDivider } from '@uikits/divider/style';
 import IconWidget from '@uikits/icon/IconWidget';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import {
   ShoppingContainer,
   Content,
@@ -23,11 +14,8 @@ import {
   EmptyContent,
 } from './style';
 import EmptyCart from '@assets/img/icon/shopping-basket@2x.png';
-
 import CounterWidget from '@uikits/counter/CounterWidget';
-
 import closeIcon from '@assets/img/icon/close.png';
-import ReactLoading from 'react-loading';
 
 const Basket = ({
   currentData,
@@ -37,41 +25,14 @@ const Basket = ({
   loadingEmpyBox,
   loadingPage,
 }) => {
-<<<<<<< HEAD
   const getValue = (count, id) => {
-    // setProductId(id);
-=======
-  const [loading, setLoading] = useState(false);
-  const { getRequest, deleteRequest, postRequest, updateRequest } =
-    useHttpRequest();
-  const [productId, setProductId] = useState<any>();
-
-  console.log(loadingEmpyBox, loadingPage);
-  const getValue = (count, id) => {
-    setProductId(id);
->>>>>>> 1398be2581fa51a24412f2ba4ee2dc8b74301245
     const value = {
       productId: id,
       count,
     };
-<<<<<<< HEAD
     handleSubmit(value);
   };
 
-=======
-    setLoading(true);
-    updateRequest(CART, value)
-      .then((resp) => {
-        setLoading(false);
-        // setLoadingPage(false);
-        // setOpen(true);
-        // getCart();
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  };
->>>>>>> 1398be2581fa51a24412f2ba4ee2dc8b74301245
   return (
     <ShoppingContainer>
       <Content>
@@ -113,28 +74,11 @@ const Basket = ({
                       </div>
                     </Option>
 
-<<<<<<< HEAD
                     <CounterWidget
                       initial={item.count}
                       data={item.productId}
                       handleChange={getValue}
                     />
-=======
-                    {loading && productId === item.productId ? (
-                      <ReactLoading
-                        type={'spinningBubbles'}
-                        color={colorPalette.red_650}
-                        height={15}
-                        width={15}
-                      />
-                    ) : (
-                      <Counter
-                        initial={item.count}
-                        data={item.productId}
-                        handleChange={getValue}
-                      />
-                    )}
->>>>>>> 1398be2581fa51a24412f2ba4ee2dc8b74301245
                   </ItemContent>
                   <Option className='remove'>
                     <StyleDivider

@@ -58,7 +58,7 @@ export const USER_PROFILE = '/account/profile';
 
 // cart
 export const CART = '/cart';
-export const PRODUCTS_WITH_PRICE = '/cart';
+export const PRODUCTS_WITH_PRICE = '/cart/getproductswithprice';
 
 // Message Count
 export const MESSAGE_COUNT = '/user/message/newmessagecount';
