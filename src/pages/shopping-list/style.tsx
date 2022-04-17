@@ -324,6 +324,10 @@ export const ItemContainer = styled.div`
   padding: 16px 28px;
 `;
 export const ItemOptionContainer = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  color: #707070;
+  // min-width: 45px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

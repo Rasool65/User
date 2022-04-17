@@ -23,7 +23,12 @@ import { useEffect, useState } from 'react';
 import useHttpRequest from '@hooks/useHttpRequest';
 import { PRODUCTS_WITH_PRICE } from '@config/constantApi';
 
-const Invoice = ({ handleSubmit, finalizeInvoice, loadingOrder }) => {
+const Invoice = ({
+  handleSubmit,
+  handleClickPrevious,
+  finalizeInvoice,
+  loadingOrder,
+}) => {
   const [invoiceData, setInvoiceData] = useState<any>([]);
   const [invoiceValues, setInvoiceValues] = useState({
     sum: 0,
@@ -38,8 +43,8 @@ const Invoice = ({ handleSubmit, finalizeInvoice, loadingOrder }) => {
       let discount = 0;
       const data = result.data;
       data.forEach((item) => {
-        sum = item.count * item.price + sum;
-        discount = item.count * item.discount + discount;
+        sum = item.price + sum;
+        discount = item.discount + discount;
       });
       setInvoiceValues({
         sum,
@@ -63,8 +68,15 @@ const Invoice = ({ handleSubmit, finalizeInvoice, loadingOrder }) => {
               return (
                 <ItemContainer key={index}>
                   <ItemOptionContainer>
-                    <p>{index + 1}</p>
+                    <span>{index + 1}</span>
+                    <StyleDivider
+                      Width={'1px'}
+                      Height={'5px'}
+                      Type={'Vertical'}
+                      Background={colorPalette.gray_55}
+                    />
                     <ProductOption>{item.productName}</ProductOption>
+                    <p>{item.count}</p>
                   </ItemOptionContainer>
                   {item.focIndicator ? (
                     <ItemOptionContainer>
@@ -72,10 +84,6 @@ const Invoice = ({ handleSubmit, finalizeInvoice, loadingOrder }) => {
                     </ItemOptionContainer>
                   ) : (
                     <>
-                      <ItemOptionContainer>
-                        <p>{item.count}</p>
-                        <p>{UtilsHelper.threeDigitSeparator(item.price)}</p>
-                      </ItemOptionContainer>
                       <ItemOptionContainer>
                         {!!item.discount && (
                           <>
@@ -87,6 +95,7 @@ const Invoice = ({ handleSubmit, finalizeInvoice, loadingOrder }) => {
                         )}
                       </ItemOptionContainer>
                       <ItemOptionContainer>
+                        <p>{UtilsHelper.threeDigitSeparator(item.price)}</p>
                         <p>ریال</p>
                       </ItemOptionContainer>
                     </>
@@ -125,7 +134,7 @@ const Invoice = ({ handleSubmit, finalizeInvoice, loadingOrder }) => {
         </AsideItemContainer>
         <StyleCustomBtn
           onClick={finalizeInvoice}
-          disabled={invoiceData.length === 0 ? true : false}
+          disabled={(invoiceData.length === 0 ? true : false) || loadingOrder}
           type='button'
           Width={'100%'}
           Height={'51px'}
@@ -140,6 +149,24 @@ const Invoice = ({ handleSubmit, finalizeInvoice, loadingOrder }) => {
             />
           )}
           تکمیل خرید
+        </StyleCustomBtn>
+        <StyleCustomBtn
+          onClick={handleClickPrevious}
+          disabled={(invoiceData.length === 0 ? true : false) || loadingOrder}
+          type='button'
+          Width={'100%'}
+          Height={'51px'}
+          style={{ marginTop: '1rem', backgroundColor: 'gray' }}
+        >
+          {loadingOrder && (
+            <ReactLoading
+              type={'spinningBubbles'}
+              color={'#ffffff'}
+              height={30}
+              width={30}
+            />
+          )}
+          بازگشت
         </StyleCustomBtn>
         {/* </TotalPrice> */}
       </Aside>

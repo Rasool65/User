@@ -24,12 +24,16 @@ const Stepper = ({ steps, activeStep }) => {
                 src={step.icon}
                 width='30px'
                 height='30px'
-                style={index === activeStep ? activeIconStyle : {}}
+                style={
+                  index === activeStep ? activeIconStyle : { opacity: '70%' }
+                }
               />
             </StyleStepIcon>
             <StyleStepTitle>{step.name}</StyleStepTitle>
           </StyleStepContainer>
-          {index + 1 < steps.length && <StyleConnector />}
+          {index + 1 < steps.length && (
+            <StyleConnector isActive={index === activeStep} />
+          )}
         </React.Fragment>
       ))}
     </StyleStepperContainer>

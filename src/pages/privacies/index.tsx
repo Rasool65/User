@@ -1,7 +1,7 @@
 import DividerWidget from '@uikits/divider/DividerWidget';
 import React, { useState, useEffect } from 'react';
 import { Container } from 'src/style';
-import { TERMS_SETTING_API } from '@config/constantApi';
+import { PRIVACIES_SETTING_API } from '@config/constantApi';
 import useHttpRequest from '@hooks/useHttpRequest';
 
 import {
@@ -9,7 +9,7 @@ import {
   ClickableTitleCotainer,
   PageDescribeContainer,
   PageTitleContainer,
-  TermsContainer,
+  PrivaciesContainer,
 } from './style';
 
 const searchRegExp = /\s/g;
@@ -67,28 +67,30 @@ function parseAll(html: string) {
   return parser(html, options);
 }
 
-function Terms() {
+function Privacies() {
   const { getRequest } = useHttpRequest();
-  const [terms, setTerms] = useState('');
+  const [privacies, setPrivacies] = useState('');
   useEffect(() => {
-    getRequest(TERMS_SETTING_API).then((resp) => {
-      setTerms(resp.data.terms);
+    getRequest(PRIVACIES_SETTING_API).then((resp) => {
+      setPrivacies(resp.data.privacy);
     });
   }, []);
   return (
     <Container isHidden={false}>
       <PageTitleContainer>
-        <h3> شرایط و قوانین استفاده از سرویس ها و خدمات سولیکو</h3>
+        <h3>حریم خصوصی استفاده از سرویس ها و خدمات سولیکو</h3>
       </PageTitleContainer>
 
       <ClickableTitleCotainer>
-        {!!terms && parseTitle(terms)}
+        {!!privacies && parseTitle(privacies)}
       </ClickableTitleCotainer>
 
       <DividerWidget type='Horizontal' />
-      <TermsContainer>{!!terms && parseAll(terms)}</TermsContainer>
+      <PrivaciesContainer>
+        {!!privacies && parseAll(privacies)}
+      </PrivaciesContainer>
     </Container>
   );
 }
 
-export default Terms;
+export default Privacies;

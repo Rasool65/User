@@ -16,6 +16,7 @@ import {
 import EmptyCart from '@assets/img/icon/shopping-basket@2x.png';
 import CounterWidget from '@uikits/counter/CounterWidget';
 import closeIcon from '@assets/img/icon/close.png';
+import ReactLoading from 'react-loading';
 
 const Basket = ({
   currentData,
@@ -24,6 +25,7 @@ const Basket = ({
   handleSubmit,
   loadingEmpyBox,
   loadingPage,
+  loadingOrder,
 }) => {
   const getValue = (count, id) => {
     const value = {
@@ -42,7 +44,7 @@ const Basket = ({
               return (
                 <ListItem key={index + 1}>
                   <Option className='name'>
-                    <span>{index + 1}</span>
+                    <span style={{ color: '#707070' }}>{index + 1}</span>
                     <StyleDivider
                       Width={'1px'}
                       Height={'5px'}
@@ -121,20 +123,6 @@ const Basket = ({
         )}
       </Content>
       <Aside>
-        {/* <TotalPrice disabled={currentData.length === 0 ? true : false}> */}
-        {/* <PriceHeader>
-              <p>قیمت کالاها:</p>
-              <div>
-                <span>{UtilsHelper.threeDigitSeparator(finalPrice)}</span>
-                <span>ریال</span>
-              </div>
-            </PriceHeader>
-            <StyleDivider
-              Width={'100%'}
-              Height={'1px'}
-              Type={'Horizontal'}
-              Background={colorPalette.gray_47}
-            />  */}
         <PriceDescription>
           لطفا برای پیگیری سفارش وارد پروفایل شده واز طریق منوی "سفارش های من" و
           دکمه جزئیات سفارش از پیشرفت سفارش مطلع گردید.
@@ -146,14 +134,14 @@ const Basket = ({
           Width={'100%'}
           Height={'51px'}
         >
-          {/* {loadingOrder && (
-              <ReactLoading
-                type={'spinningBubbles'}
-                color={'#ffffff'}
-                height={30}
-                width={30}
-              />
-            )} */}
+          {loadingOrder && (
+            <ReactLoading
+              type={'spinningBubbles'}
+              color={'#ffffff'}
+              height={30}
+              width={30}
+            />
+          )}
           ادامه
         </StyleCustomBtn>
         {/* </TotalPrice> */}

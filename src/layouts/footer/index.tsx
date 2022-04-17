@@ -10,7 +10,6 @@ import {
   ABOUT_US_URL,
   TERMS_URL,
   PRIVACIES_URL,
-  CUSTOMER_CLUB_URL,
 } from '@config/constantUrl';
 import {
   StyleFooterSection,
@@ -187,8 +186,8 @@ const Footer = () => {
               <MenuItem title='قوانین و مقررات'>
                 <NavLink to={TERMS_URL}>قوانین و مقررات</NavLink>
               </MenuItem>
-              <MenuItem title='باشگاه مشتریان'>
-                <NavLink to={CUSTOMER_CLUB_URL}>باشگاه مشتریان</NavLink>
+              <MenuItem title='حریم خصوصی'>
+                <NavLink to={PRIVACIES_URL}>حریم خصوصی</NavLink>
               </MenuItem>
               <MenuItem title='سوالات متداول'>
                 <NavLink to={QUESTIONS_URL}>سوالات متداول</NavLink>

@@ -88,6 +88,7 @@ const ProductInfo = () => {
   }, []);
 
   const [loading, setLoading] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
   const [categoryId, setCategoryId] = useState('');
   const { shoppingListCount } = useSelector(
     (State: any) => State.ShoppingReducer
@@ -230,11 +231,14 @@ const ProductInfo = () => {
 
   const showPriceItem = () => {
     if (id) {
-      setShowPrice(true);
-      getRequest(`${GET_PRICE}?productId=${id}`).then((resp) => {
-        setShowPrice(true);
-        setPrice(resp.data);
-      });
+      setBtnLoading(true);
+      getRequest(`${GET_PRICE}?productId=${id}`)
+        .then((resp) => {
+          setShowPrice(true);
+          setPrice(resp.data);
+          setBtnLoading(false);
+        })
+        .catch(() => setBtnLoading(false));
     }
   };
 
@@ -339,8 +343,21 @@ const ProductInfo = () => {
               </Price>
             ) : (
               <StyleShowPriceProduct>
-                <Button style={{ width: '100%' }} onClick={showPriceItem}>
-                  مشاهده قیمت
+                <Button
+                  disabled={btnLoading}
+                  style={{ width: '100%' }}
+                  onClick={showPriceItem}
+                >
+                  {btnLoading ? (
+                    <ReactLoading
+                      type={'spinningBubbles'}
+                      color={'#EA2125'}
+                      height={25}
+                      width={25}
+                    />
+                  ) : (
+                    'مشاهده قیمت'
+                  )}{' '}
                 </Button>
               </StyleShowPriceProduct>
             )}

@@ -289,7 +289,7 @@ const UserPanelPayments = () => {
                           <div className='left'>
                             <p>تعداد :{item?.count}</p>
                             <p>
-                              قیمت تقریبی :
+                              قیمت :
                               {UtilsHelper.threeDigitSeparator(item?.price)}
                               ریال
                             </p>
@@ -341,11 +341,15 @@ const UserPanelPayments = () => {
                             {orderStatus === 2 ? 'تعداد' : 'تعداد نهایی'} :
                             {item?.count}
                           </p>
-                          <p>
-                            {orderStatus === 2 ? 'قیمت تقریبی' : 'قیمت نهایی'} :
-                            {UtilsHelper.threeDigitSeparator(item?.price)}
-                            ریال
-                          </p>
+                          {item?.focIndicator ? (
+                            <p>اشانتیون</p>
+                          ) : (
+                            <p>
+                              {orderStatus === 2 ? 'قیمت ' : 'قیمت نهایی'} :
+                              {UtilsHelper.threeDigitSeparator(item?.price)}
+                              ریال
+                            </p>
+                          )}
                         </div>
                       </Item>
                     );

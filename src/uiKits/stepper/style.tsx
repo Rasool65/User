@@ -5,7 +5,7 @@ export const StyleStepperContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
-  border: 1px solid #898989;
+  border: 1px solid #eaeaea;
   border-radius: 1.5rem;
   margin: 3rem 3rem 1rem 3rem;
   border-radius: 15px;
@@ -21,17 +21,23 @@ export const StyleStepContainer = styled.div<{
   padding: 0 10px;
   color: ${(props) =>
     props.isActive ? colorPalette.red_100 : colorPalette.gray_100};
+  opacity: ${(props) => (props.isActive ? '100%' : '70%')};
 `;
 
-export const StyleConnector = styled.div`
+export const StyleConnector = styled.div<{
+  isActive?: boolean;
+}>`
   flex: 1;
   height: 1px;
-  background-color: #898989;
+  background-color: ${(props) =>
+    props.isActive ? colorPalette.gray_100 : colorPalette.gray_60};
   display: flex;
   align-self: center;
   margin-bottom: 10px;
 `;
-export const StyleStepIcon = styled.div``;
+export const StyleStepIcon = styled.div<{
+  isActive?: boolean;
+}>``;
 
 export const StyleStepTitle = styled.h5`
   margin-top: 0.3rem;

@@ -43,7 +43,7 @@ const Product = (props) => {
   const [showPrice, setShowPrice] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(0);
   const { postRequest, getRequest } = useHttpRequest();
-
+  const [btnLoading, setBtnLoading] = useState(false);
   const getCount = (count) => {
     setProductCount(count);
   };
@@ -68,11 +68,14 @@ const Product = (props) => {
   };
   const showPriceItem = () => {
     if (id) {
-      setShowPrice(true);
-      getRequest(`${GET_PRICE}?productId=${id}`).then((resp) => {
-        setShowPrice(true);
-        setPrice(resp.data);
-      });
+      setBtnLoading(true);
+      getRequest(`${GET_PRICE}?productId=${id}`)
+        .then((resp) => {
+          setShowPrice(true);
+          setPrice(resp.data);
+          setBtnLoading(false);
+        })
+        .catch(() => setBtnLoading(false));
     }
   };
   return (
@@ -98,8 +101,21 @@ const Product = (props) => {
           </>
         ) : (
           <StyleShowPrice>
-            <Button style={{ width: '100%' }} onClick={showPriceItem}>
-              مشاهده قیمت
+            <Button
+              disabled={btnLoading}
+              style={{ width: '100%' }}
+              onClick={showPriceItem}
+            >
+              {btnLoading ? (
+                <ReactLoading
+                  type={'spinningBubbles'}
+                  color={'#EA2125'}
+                  height={25}
+                  width={25}
+                />
+              ) : (
+                'مشاهده قیمت'
+              )}
             </Button>
           </StyleShowPrice>
         )}

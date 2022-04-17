@@ -73,7 +73,8 @@ export const StylePriceRow = styled.div`
 `;
 
 export const StylePriceTitle = styled.span`
-  font-size: 12px;
+  font-weight: bold;
+  font-size: 14px;
 `;
 
 export const StylePrice = styled.span`
@@ -93,6 +94,6 @@ export const StyleCartRow = styled.div<{ count?: any }>`
 
 export const StyleShowPrice = styled.button`
   flex: auto;
-  background-color: ${colorPalette.gray_52};
+  background-color: ${colorPalette.gray_30};
   border-radius: 6px;
 `;

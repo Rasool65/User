@@ -20,5 +20,4 @@ export const LANDING_URL = '/landingProducts';
 export const PRE_FACTOR_URL = '/preFactor';
 export const TERMS_URL = '/terms';
 export const PRIVACIES_URL = '/privacies';
-export const CUSTOMER_CLUB_URL = '/club';
 export const MAINTENANCE_MODE_URL = '/maintenance';

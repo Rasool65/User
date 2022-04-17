@@ -236,6 +236,10 @@ const ShoppingListWidget = () => {
     setCurrentStep(steps[activeStep + 1]);
     setActiveStep(activeStep + 1);
   };
+  const onClickPrevious = () => {
+    setCurrentStep(steps[activeStep - 1]);
+    setActiveStep(activeStep - 1);
+  };
   return (
     <Container isHidden={false}>
       <Snackbar
@@ -266,6 +270,7 @@ const ShoppingListWidget = () => {
             currentData={currentData}
             handleDeleteProduct={handleDeleteProduct}
             handleClickNext={onClickNext}
+            handleClickPrevious={onClickPrevious}
             handleSubmit={handleSubmit}
             loadingEmpyBox={loadingEmpyBox}
             loadingPage={loadingPage}
