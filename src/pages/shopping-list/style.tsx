@@ -39,7 +39,8 @@ export const Aside = styled.aside`
   border-radius: 15px;
   border: 1px solid ${colorPalette.gray_30};
   margin-bottom: 20px;
-  padding: 12px 20px;
+  padding: 20px 20px;
+  height: max-content;
   ${MediaQueryStyle.sm(css`
     width: 100%;
   `)}

@@ -8,7 +8,7 @@ const errorInputStyle = css`
 
 export const StyleContainer = styled.div`
   width: 100%;
-  height: 48px;
+  height: 39px;
   background-color: inherit;
   position: relative;
   & span.input__prefix {
@@ -65,7 +65,7 @@ export const StyleInput = styled.input<{
 
 export const StyleFormItemErrMsg = styled.p`
   width: 100%;
-  font-size: 14px;
+  font-size: 11px;
   padding-top: 4px;
   color: ${colorPalette.red_100};
 `;

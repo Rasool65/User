@@ -67,20 +67,30 @@ export const StyleAnchorTag = styled.a`
 export const StylePriceRow = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   direction: rtl;
+  height: 37px;
   color: rgba(0, 0, 0, 0.4);
 `;
 
 export const StylePriceTitle = styled.span`
   font-weight: bold;
+  padding-top: 8px;
   font-size: 14px;
 `;
 
 export const StylePrice = styled.span`
   color: ${colorPalette.green_350};
   font-weight: bold;
+  padding-top: 8px;
   font-size: 14px;
+`;
+
+export const StylePriceContainer = styled.div`
+  margin-bottom: 22px;
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
 `;
 
 export const StyleCartRow = styled.div<{ count?: any }>`

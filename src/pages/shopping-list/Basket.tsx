@@ -131,6 +131,7 @@ const Basket = ({
           onClick={handleClickNext}
           disabled={currentData.length === 0 ? true : false}
           type='button'
+          style={{ margin: 0 }}
           Width={'100%'}
           Height={'51px'}
         >

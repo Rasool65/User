@@ -6,6 +6,7 @@ export const StyleFormItemContainer = styled.div<{ style?: any }>`
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding-bottom: 10px;
   ${(p) => (p.style ? p.style : '')};
 `;
 
@@ -23,7 +24,7 @@ export const StyleFormItemLable = styled.div<{ required?: boolean }>`
     padding-right: 5px;
   }
   & span.lable {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     color: ${colorPalette.gray_850};
   }

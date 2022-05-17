@@ -16,6 +16,17 @@ export const USER_PANEL_MESSAGE_API = '/user/message';
 export const USER_PANEL_ORDER_API = '/user/orders/myorder';
 export const USER_PANEL_UNSETTLED_API = '/user/orders/openitems';
 export const USER_PANEL_TRANSACTION_API = '/user/transaction';
+export const USER_PANEL_GET_DEBT_OR_CREDIT_API =
+  'user/transaction/getdebtorscreditors';
+export const USER_PANEL_GET_UNSETTLED_CHECK_API =
+  'user/checks/getunsettledchecks';
+export const USER_PANEL_GET_CREDIT_GROUP_API = '/user/credit/creditgroups';
+
+//download Excel
+export const DEBT_OR_CREDIT_DOWNLOAD_EXCEL_API =
+  'user/transaction/excelreportdebtorscreditors';
+export const UNSETTLED_DOWNLOAD_EXCEL_API =
+  'user/checks/excelreportunsettledchecks';
 
 // Auth
 export const LOGIN_POST = '/account/customerlogin';

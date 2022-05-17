@@ -8,7 +8,6 @@ import {
   MaintenanceModeWidget,
   ContactUswidget,
   TermsWidget,
-  PrivaciesWidget,
   AuthWidget,
   LandingWidget,
   AboutUsWidget,
@@ -17,6 +16,7 @@ import {
   ProductsWidget,
   ShoppingListWidget,
   PreFactorWidget,
+  CustomerClubWidget,
 } from '@pages/index';
 
 import {
@@ -32,6 +32,7 @@ import {
   CONTACT_US_URL,
   TERMS_URL,
   PRIVACIES_URL,
+  CUSTOMER_CLUB_URL,
 } from '@config/constantUrl';
 import userPanel from '@pages/user-panel';
 import { CUSTOMER_PROFILE, SETTING_API } from '@config/constantApi';
@@ -160,7 +161,11 @@ export const MainRoutes = () => {
         <Route exact={true} path={TERMS_URL} component={TermsWidget} />
 
         {/* User Privacies Route */}
-        <Route exact={true} path={PRIVACIES_URL} component={PrivaciesWidget} />
+        <Route
+          exact={true}
+          path={CUSTOMER_CLUB_URL}
+          component={CustomerClubWidget}
+        />
 
         <Route path={'*'} component={Error404} />
       </Switch>

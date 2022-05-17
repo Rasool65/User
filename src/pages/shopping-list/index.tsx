@@ -1,46 +1,16 @@
-import { useState, useMemo, useEffect } from 'react';
-import {
-  SectionShoppingList,
-  ShoppingContainer,
-  Content,
-  Aside,
-  TotalPrice,
-  PriceDescription,
-  CartList,
-  ListItem,
-  Option,
-  ItemContent,
-  ItemContentPrice,
-  AddressItem,
-  SelectOption,
-  EmptyContent,
-  Addresses,
-  Loader,
-} from './style';
+import { useState, useEffect } from 'react';
+import { SectionShoppingList, AddressItem, Addresses, Loader } from './style';
 import Section from '@uikits/section/SectionWidget';
-import { StyleCustomBtn } from '@uikits/button/style';
-
 // icons
 import BasketIcon from '@assets/img/icon/basketIcon.svg';
 import InvoiceIcon from '@assets/img/icon/invoice.svg';
 import ConfirmIcon from '@assets/img/icon/confirm.svg';
-
-import Counter from '@uikits/counter/CounterWidget';
 import { StyleDivider } from '@uikits/divider/style';
 import { colorPalette } from '@uikits/colors/Color';
-import IconWidget from '@uikits/icon/IconWidget';
 import { Container } from '../../style';
-import closeIcon from '@assets/img/icon/close.png';
 import { CART, SUBMIT_ORDER, _TOKEN_NAME } from '@config/constantApi';
 import useHttpRequest from '@hooks/useHttpRequest';
-import { useLocation, useHistory } from 'react-router-dom';
-import {
-  PRE_FACTOR_URL,
-  SHOPPING_LIST_URL,
-  USER_PANEL_DASHBOARD,
-} from '@config/constantUrl';
 import ReactLoading from 'react-loading';
-import { UtilsHelper } from '../../utils/UtilsHelper';
 import {
   ShoppingListCountAction,
   ShoppingListChangeAction,
@@ -49,10 +19,8 @@ import { preFactorApisAction } from '@redux/preFactor/action';
 import { useDispatch } from 'react-redux';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import EmptyCart from '@assets/img/icon/shopping-basket@2x.png';
 import { useSelector } from 'react-redux';
-// import { Step, StepLabel, Stepper } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Radio } from '@material-ui/core';
 
 import Stepper from '@uikits/stepper/StepperWidget';
 import Basket from './Basket';
@@ -82,12 +50,9 @@ const steps: ISteps[] = [
 ];
 
 const ShoppingListWidget = () => {
-  const history = useHistory();
-  const location = useLocation();
   const { getRequest, deleteRequest, postRequest, updateRequest } =
     useHttpRequest();
   const [currentData, setCurrentData] = useState<any>([]);
-  const [invoiceData, setInvoiceData] = useState<any>([]);
   const [productId, setProductId] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingOrder, setLoadingOrder] = useState(false);
@@ -284,10 +249,7 @@ const ShoppingListWidget = () => {
           <Section more={false} name={' آدرس گیرنده'}>
             {!!userInfo?.address && (
               <AddressItem>
-                <SelectOption>
-                  <input type='radio' name='address' checked={true} />
-                  <span className='checkmark' />
-                </SelectOption>
+                <Radio style={{ color: '#EA2125' }} checked={true}></Radio>
                 <p>
                   <span>گیرنده:</span>
                   <span>{userInfo?.fullName}</span>

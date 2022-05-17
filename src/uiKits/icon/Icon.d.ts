@@ -1,3 +1,5 @@
+import { EventHandler } from 'react';
+
 export namespace Icon {
   export interface IProps {
     height?: string;
@@ -5,5 +7,6 @@ export namespace Icon {
     alt?: string;
     src?: string;
     style?: React.CSSProperties;
+    onClick?: EventHandler;
   }
 }

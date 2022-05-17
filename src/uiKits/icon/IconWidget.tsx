@@ -8,6 +8,7 @@ const IconWidget: React.FC<Icon.IProps> = ({
   alt,
   src,
   style,
+  onClick,
 }) => {
   return (
     <StyleCustomIcon
@@ -16,6 +17,7 @@ const IconWidget: React.FC<Icon.IProps> = ({
       alt={alt}
       src={src}
       style={style}
+      onClick={onClick}
     />
   );
 };

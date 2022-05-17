@@ -32,6 +32,7 @@ import {
   TablePaginationAction,
   PageUrlAction,
 } from '@redux/tablePagination/action';
+import ITableColumn from '@uikits/table/ITableColumn';
 
 const UserPanelOpenOrders = () => {
   const dispatch = useDispatch();
@@ -159,7 +160,7 @@ const UserPanelOpenOrders = () => {
     }
   };
 
-  const columns = [
+  const columns: ITableColumn[] = [
     // {
     //     label: 'شماره مشتری',
     //     name: 'quotationNumber',
@@ -260,6 +261,8 @@ const UserPanelOpenOrders = () => {
             title={'ليست سفارش‌های باز'}
             data={renderPage ? currentData : []}
             columns={columns}
+            pageSize={5}
+            pageNumber={currentTablePagination}
           />
         ) : (
           <StyleLoading>

@@ -1,0 +1,18 @@
+.MuiTab-textColorPrimary.Mui-selected{
+    color: #000000 !important;
+    background-color: #ffffff !important;
+}
+.PrivateTabIndicator-colorPrimary-3 , .PrivateTabIndicator-colorPrimary-15 , .MuiTabs-indicator {
+    background-color: #ea2125 !important;
+    top: 0 !important;
+}
+.MuiTabs-flexContainer {
+    background-color: whitesmoke !important;
+}
+.MuiTab-textColorPrimary {
+    /* background-color: #e7e7e7 !important; */
+}
+.MuiTab-root{
+    min-height: 43px !important;
+    font-size: 0.8rem !important;
+}

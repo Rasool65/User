@@ -76,7 +76,7 @@ function Terms() {
     });
   }, []);
   return (
-    <Container isHidden={false}>
+    <Container className='static-content' isHidden={false}>
       <PageTitleContainer>
         <h3> شرایط و قوانین استفاده از سرویس ها و خدمات سولیکو</h3>
       </PageTitleContainer>

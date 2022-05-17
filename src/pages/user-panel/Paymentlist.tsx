@@ -95,21 +95,16 @@ const UserPanelPayments = () => {
             (item) => item.orderStatus === 2
           )?.orderItems;
           if (!!preOrder && preOrder?.length > 0) {
-            const newArray: any = [];
-            resp.data.orderItems.map((item, index) => {
-              const newItem = preOrder.find((_item) => _item.id === item.id);
-              newArray.push(newItem);
-            });
-            setHistoryValue(newArray);
+            setHistoryValue(preOrder);
           }
 
           setOrderStatus(resp.data.orderStatus);
           const Price = resp.data.orderItems.reduce((prev, current) => {
-            return prev + current.count * current.price;
+            return prev + current.price;
           }, 0);
           setSumPrice(Price);
           setDiscountPrice(resp.data.discountPrice);
-          setfinalPrice(Price + resp.data.tax);
+          setfinalPrice(Price + resp.data.tax - resp.data.discountPrice);
           setTaxation(resp.data.tax);
         })
         .catch(() => {
@@ -137,10 +132,10 @@ const UserPanelPayments = () => {
 
   useMemo(() => {
     const Price = currentValue.reduce((prev, current) => {
-      return prev + current.count * current.price;
+      return prev + current.price;
     }, 0);
     setSumPrice(Price);
-    setfinalPrice(Price + taxation);
+    setfinalPrice(Price + taxation - discountPrice);
   }, [currentValue]);
 
   const getWidth = () => {
@@ -288,11 +283,15 @@ const UserPanelPayments = () => {
                           </div>
                           <div className='left'>
                             <p>تعداد :{item?.count}</p>
-                            <p>
-                              قیمت :
-                              {UtilsHelper.threeDigitSeparator(item?.price)}
-                              ریال
-                            </p>
+                            {item?.focIndicator ? (
+                              <p>اشانتیون</p>
+                            ) : (
+                              <p>
+                                قیمت :
+                                {UtilsHelper.threeDigitSeparator(item?.price)}
+                                ریال
+                              </p>
+                            )}
                           </div>
                         </Item>
                       );
@@ -338,15 +337,19 @@ const UserPanelPayments = () => {
                         </div>
                         <div className='left'>
                           <p>
-                            {orderStatus === 2 ? 'تعداد' : 'تعداد نهایی'} :
-                            {item?.count}
+                            {orderStatus === 2 || orderStatus === 3
+                              ? 'تعداد'
+                              : 'تعداد نهایی'}
+                            :{item?.count}
                           </p>
                           {item?.focIndicator ? (
                             <p>اشانتیون</p>
                           ) : (
                             <p>
-                              {orderStatus === 2 ? 'قیمت ' : 'قیمت نهایی'} :
-                              {UtilsHelper.threeDigitSeparator(item?.price)}
+                              {orderStatus === 2 || orderStatus === 3
+                                ? 'قیمت '
+                                : 'قیمت نهایی'}
+                              :{UtilsHelper.threeDigitSeparator(item?.price)}
                               ریال
                             </p>
                           )}

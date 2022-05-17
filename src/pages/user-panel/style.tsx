@@ -237,10 +237,10 @@ export const Message = styled.p`
 `;
 
 export const FormRow = styled.div`
-  margin-top: 30px;
+  margin-top: 15px;
   padding: 0 25px;
   display: grid;
-  grid-gap: 24px;
+  grid-gap: 18px;
   grid-template-columns: repeat(2, 1fr);
   ${MediaQueryStyle.sm(
     css`
@@ -248,8 +248,22 @@ export const FormRow = styled.div`
     `
   )}
   > div {
-    margin-bottom: 15px;
-    width: 90%;
+    /* margin-bottom: 15px; */
+    width: 100%;
+  }
+`;
+
+export const LabelRow = styled.div`
+  margin-top: 15px;
+  padding: 0 25px;
+  display: block;
+  font-size: 14px;
+  > div {
+    /* margin-bottom: 15px; */
+    width: 100%;
+  }
+  label {
+    margin-left: 8px;
   }
 `;
 
@@ -362,7 +376,7 @@ export const NewMessage = styled.div`
 export const BtnsRow = styled.div`
   width: 100%;
   display: flex;
-  margin: 25px 0;
+  margin: 28px 25px;
   button {
     margin: 0 0 0 15px;
   }

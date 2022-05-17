@@ -64,6 +64,4 @@ typings/
 
 .idea
 *.zip
-.yarn/install-state.gz
-.yarnrc.yml
-yarn.lock
+

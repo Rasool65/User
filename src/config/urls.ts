@@ -1,4 +1,4 @@
 export const BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://localhost:44323'
+    ? 'http://10.10.12.35:6010'
     : 'https://localhost:44323';

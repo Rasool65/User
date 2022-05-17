@@ -6,16 +6,11 @@ import {
   ShoppingContainer,
   Content,
   CartList,
-  Option,
-  ListItem,
-  ItemContent,
   Aside,
-  PriceDescription,
   ItemContainer,
   ItemOptionContainer,
   ProductOption,
   AsideItemContainer,
-  Loader,
   LoaderContainer,
 } from './style';
 import ReactLoading from 'react-loading';
@@ -34,22 +29,26 @@ const Invoice = ({
     sum: 0,
     discount: 0,
     total: 0,
+    tax: 0,
   });
   const { getRequest } = useHttpRequest();
 
   const getInvoiceData = () => {
     getRequest(PRODUCTS_WITH_PRICE).then((result) => {
-      let sum = 0;
-      let discount = 0;
+      let discount = 0,
+        tax = 0,
+        sum = 0;
       const data = result.data;
       data.forEach((item) => {
-        sum = item.price + sum;
-        discount = item.discount + discount;
+        sum += item.price;
+        discount += item.discount;
+        tax += item.tax;
       });
       setInvoiceValues({
         sum,
         discount,
-        total: sum - discount,
+        tax,
+        total: sum + tax - discount,
       });
       setInvoiceData(data);
     });
@@ -119,6 +118,14 @@ const Invoice = ({
         <AsideItemContainer>
           <p>قیمت کل</p>
           <p>{UtilsHelper.threeDigitSeparator(invoiceValues.sum)}</p>
+        </AsideItemContainer>
+        <AsideItemContainer>
+          <p>مالیات</p>
+          <p>
+            {invoiceValues.tax
+              ? UtilsHelper.threeDigitSeparator(invoiceValues.tax)
+              : '0'}
+          </p>
         </AsideItemContainer>
         <AsideItemContainer>
           <p>تخفیف</p>

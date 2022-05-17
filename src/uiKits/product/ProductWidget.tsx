@@ -13,6 +13,7 @@ import {
   StyleAnchorTag,
   StylePrice,
   StylePriceRow,
+  StylePriceContainer,
   StylePriceTitle,
   StyleCartRow,
   StyleShowPrice,

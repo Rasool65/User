@@ -9,4 +9,4 @@ export { default as PreFactorWidget } from './preFactor';
 export { default as MaintenanceModeWidget } from './maintenance';
 export { default as ContactUswidget } from './contact-us';
 export { default as TermsWidget } from './terms';
-export { default as PrivaciesWidget } from './privacies';
+export { default as CustomerClubWidget } from './customerClub';

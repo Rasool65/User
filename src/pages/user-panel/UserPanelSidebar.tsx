@@ -14,11 +14,10 @@ import {
   USER_PANEL_ADDRESSES,
   USER_PANEL_MESSAGES,
   USER_PANEL_PROFILE,
-  USER_PANEL_PAYMENT_LIST,
-  USER_PANEL_UNSETTLED_ACCOUNTS,
-  USER_PANEL_USERS_LIST,
   AUTH_URL,
   USER_PANEL_TRANSACTION,
+  USER_PANEL_DEBT_AND_CREDIT,
+  USER_PANEL_PAYMENT,
 } from '@config/constantUrl';
 import {
   StyleSidebar,
@@ -90,16 +89,16 @@ export const menuItems = [
     link: '',
     children: [
       {
-        id: 40,
+        id: 42,
         parentId: 4,
-        title: 'لیست حساب های تسویه نشده',
-        link: USER_PANEL_UNSETTLED_ACCOUNTS,
+        title: 'لیست بدهکاری و بستانکاری',
+        link: USER_PANEL_DEBT_AND_CREDIT,
       },
       {
-        id: 41,
+        id: 43,
         parentId: 4,
-        title: 'لیست پرداخت ها',
-        link: USER_PANEL_TRANSACTION,
+        title: 'پرداخت',
+        link: USER_PANEL_PAYMENT,
       },
     ],
   },

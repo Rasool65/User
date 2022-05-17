@@ -12,6 +12,8 @@ import {
   USER_PANEL_UNSETTLED_ACCOUNTS,
   USER_PANEL_USERS_LIST,
   USER_PANEL_TRANSACTION,
+  USER_PANEL_DEBT_AND_CREDIT,
+  USER_PANEL_PAYMENT,
 } from '@config/constantUrl';
 import UserPanelDashboard from './UserPanelDashboard';
 import UserPanelOpenOrders from './OpenOrders';
@@ -27,6 +29,8 @@ import { userApisAction } from '@redux/userInfo/action';
 import { useDispatch, useSelector } from 'react-redux';
 import useHttpRequest from '@hooks/useHttpRequest';
 import { _TOKEN_NAME } from '@config/constantApi';
+import { DebtAndCreditList } from './debt-and-credit/DebtAndCreditList';
+import { Payment } from './payment/Payment';
 
 const UserPanelRoutes = ({ children }) => {
   const dispatch = useDispatch();
@@ -123,6 +127,14 @@ const UserPanelRoutes = ({ children }) => {
           path={USER_PANEL_PROFILE}
           component={UserPanelProfile}
         />
+
+        <Route
+          exact={true}
+          path={USER_PANEL_DEBT_AND_CREDIT}
+          component={DebtAndCreditList}
+        />
+
+        <Route exact={true} path={USER_PANEL_PAYMENT} component={Payment} />
 
         {/* User Panel Users Route */}
         {/* <Route exact={true} path={USER_PANEL_USERS_LIST} component={UserPanelUsers} /> */}

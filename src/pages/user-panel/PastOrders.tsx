@@ -265,6 +265,8 @@ const UserPanelPastOrders = () => {
             title={'ليست سفارش‌های گذشته'}
             data={renderPage ? currentData : []}
             columns={columns}
+            pageSize={5}
+            pageNumber={currentTablePagination}
           />
         ) : (
           <StyleLoading>
